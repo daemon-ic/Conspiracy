@@ -1,0 +1,138 @@
+/* Footer */
+/*
+.footer {
+  display: flex;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 75px;
+  width: 100%;
+  background: black;
+}
+
+/* Background */
+
+body {
+  background: #f2f2f2;
+}
+
+/* Split the screen in half */
+
+.split {
+  display: flex;
+  height: 90vh;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Control the left side */
+
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+
+.right {
+  right: 0;
+}
+
+/* If you want the content centered horizontally and vertically */
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Black image on login screen */
+.ravens {
+  display: flex;
+  align-items: stretch;
+  width: 100vw;
+}
+
+.input {
+  width: 250px;
+  padding: 10px;
+}
+
+.statusinput {
+  width: 500px;
+  height: 25px;
+}
+
+/* News */
+.news {
+  margin-right: 0%;
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+  width: 320px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgray;
+}
+
+/* I MIGHT WANT TO CHANGE MARGIN LEFT AT SOME POINT */
+.child2 {
+  margin-left: 25%;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+  width: 320px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgray;
+}
+
+.sidebarlist {
+  padding: 75px 0px 0px 90px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebarrow {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-weight: bold;
+}
+
+.sidebaricon {
+  padding-right: 20px;
+}
+
+/* Main App */
+.alvinmain {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: blue;
+}
+
+.alvincontainer {
+  display: flex;
+  width: 1005;
+  height: 100%;
+}
+
+.postname {
+  font-weight: bold;
+}
