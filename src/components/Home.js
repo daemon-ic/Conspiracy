@@ -4,6 +4,7 @@ import "../App.css";
 import Input from "./Input";
 import HomeDisplay from "./HomeDisplay";
 import { v4 as uuidv4 } from "uuid";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 var itemsDB = fire.firestore().collection("items");
 
 //////////////////////////////////////////////////////////////////////
@@ -81,24 +82,42 @@ const Home = ({ handleLogout, user }) => {
   /////////////////////////////////////////////////////////////
   return (
     <React.Fragment>
-      <section>
-        <nav>
-          <h2>Home</h2>
-          <button onClick={handleLogout}>Logout</button>
-        </nav>
-      </section>
-      {
-        //-----------------------------------------------------
-      }
-      <div className="App">
-        <br />
-        <Input
-          term={term}
-          setTerm={setTerm}
-          onSubmit={onSubmit}
-          updateItem={updateItem}
-          showEdit={showEdit}
-        />
+      <div className="homeheader">
+        <section>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "10px",
+              borderBottom: "1px solid lightgray",
+            }}
+          >
+            <div>
+              <h2>Home</h2>
+            </div>
+            <div
+              style={{
+                paddingTop: "5px",
+                marginLeft: "auto",
+              }}
+            >
+              <ExitToAppIcon onClick={handleLogout} />
+            </div>
+          </div>
+        </section>
+        {
+          //-----------------------------------------------------
+        }
+        <div>
+          <br />
+          <Input
+            term={term}
+            setTerm={setTerm}
+            onSubmit={onSubmit}
+            updateItem={updateItem}
+            showEdit={showEdit}
+          />
+        </div>
       </div>
 
       <HomeDisplay items={items} deleteItem={deleteItem} editItem={editItem} />

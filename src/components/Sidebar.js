@@ -17,7 +17,7 @@ function Sidebar() {
               >
                 {" "}
                 <div className="sidebaricon">{val.icon}</div>
-                <div>{val.title}</div>
+                <div className="sidebarwords">{val.title}</div>
               </li>
             );
           })}

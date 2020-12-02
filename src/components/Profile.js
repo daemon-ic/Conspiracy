@@ -4,6 +4,8 @@ import "../App.css";
 import Input from "./Input";
 import Display from "./Display";
 import { v4 as uuidv4 } from "uuid";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 var itemsDB = fire.firestore().collection("items");
 
 //////////////////////////////////////////////////////////////////////
@@ -83,10 +85,26 @@ const Profile = ({ handleLogout, user }) => {
   return (
     <React.Fragment>
       <section>
-        <nav>
-          <h2>Profile</h2>
-          <button onClick={handleLogout}>Logout</button>
-        </nav>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px",
+            borderBottom: "1px solid lightgray",
+          }}
+        >
+          <div>
+            <h2>Profile</h2>
+          </div>
+          <div
+            style={{
+              paddingTop: "5px",
+              marginLeft: "auto",
+            }}
+          >
+            <ExitToAppIcon onClick={handleLogout} />
+          </div>
+        </div>
       </section>
       {
         //-----------------------------------------------------

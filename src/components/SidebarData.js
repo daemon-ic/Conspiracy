@@ -13,7 +13,7 @@ export const SidebarData = [
   {
     title: "Messages",
     icon: <MailIcon />,
-    link: "/messages",
+    link: "/",
   },
 
   {
