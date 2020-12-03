@@ -39,7 +39,6 @@ const App = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch((err) => {
-        //Line 40:9:   Expected a default case+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         switch (err.code) {
           case "auth/invalid-email":
           case "auth/user-disabled":
@@ -60,7 +59,7 @@ const App = () => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      // Line 60:9:   Expected a default case +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
       .catch((err) => {
         switch (err.code) {
           case "auth/email-already-in-use":

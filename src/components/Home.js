@@ -108,7 +108,7 @@ const Home = ({ handleLogout, user }) => {
         {
           //-----------------------------------------------------
         }
-        <div>
+        <div className="mainpanel">
           <br />
           <Input
             term={term}

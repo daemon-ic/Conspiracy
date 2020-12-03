@@ -16,8 +16,8 @@
 /*Home Header */
 .homeheader {
   width: 100%;
-  border-bottom: 1px solid;
-  border-color: lightgray;
+  border-bottom: 5px solid;
+  border-color: rgb(240, 240, 240);
 }
 
 /* Background */
@@ -150,11 +150,16 @@ body {
   font-size: 20px;
 }
 
-.listmods1 {
-  margin-left: 1.25rem;
+.mainpanel {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////// UI MODS */
+
+.listmods1 {
+  margin-left: 1.25rem;
+}
 
 .ui.bulleted.list,
 ul.ui.list {
@@ -173,6 +178,17 @@ ul.ui.list {
   }
 
   .sidebarwords {
+    display: none !important;
+  }
+  .split {
+    position: none !important;
+  }
+
+  .ravens {
+    display: none !important;
+  }
+
+  .left {
     display: none !important;
   }
 }

@@ -87,42 +87,44 @@ const Profile = ({ handleLogout, user }) => {
   /////////////////////////////////////////////////////////////
   return (
     <React.Fragment>
-      <section>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "10px",
-            borderBottom: "1px solid lightgray",
-          }}
-        >
-          <div>
-            <h2>Profile</h2>
-          </div>
+      <div className="homeheader">
+        <section>
           <div
             style={{
-              paddingTop: "5px",
-              marginLeft: "auto",
+              display: "flex",
+              alignItems: "center",
+              padding: "10px",
+              borderBottom: "1px solid lightgray",
             }}
           >
-            <ExitToAppIcon onClick={handleLogout} />
+            <div>
+              <h2>Profile</h2>
+            </div>
+            <div
+              style={{
+                paddingTop: "5px",
+                marginLeft: "auto",
+              }}
+            >
+              <ExitToAppIcon onClick={handleLogout} />
+            </div>
           </div>
-        </div>
-      </section>
-      {
-        //-----------------------------------------------------
-      }
-      <div className="App">
-        <br />
-        <Input
-          term={term}
-          setTerm={setTerm}
-          onSubmit={onSubmit}
-          updateItem={updateItem}
-          showEdit={showEdit}
-        />
-      </div>
+        </section>
 
+        {
+          //-----------------------------------------------------
+        }
+        <div className="mainpanel">
+          <br />
+          <Input
+            term={term}
+            setTerm={setTerm}
+            onSubmit={onSubmit}
+            updateItem={updateItem}
+            showEdit={showEdit}
+          />
+        </div>
+      </div>
       <Display items={items} deleteItem={deleteItem} editItem={editItem} />
     </React.Fragment>
   );
