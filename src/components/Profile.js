@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
 import "../App.css";
@@ -26,6 +28,7 @@ function useItems() {
       });
 
     return () => unsubscribe();
+    // Line 29:6:  React Hook useEffect has a missing dependency: 'authUser'. Either include it or remove the dependency array  react-
   }, []);
   return items;
 }
