@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 
 const Display = ({ items, deleteItem, editItem }) => {
