@@ -1,4 +1,3 @@
-import { BorderStyle } from "@material-ui/icons";
 import React from "react";
 
 const Display = ({ items, deleteItem, editItem }) => {
