@@ -68,7 +68,6 @@ body {
   width: 100vw;
 }
 
-/*
 .input {
   width: 250px;
   padding: 10px;
@@ -151,8 +150,12 @@ body {
 }
 
 .mainpanel {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.enterbutton {
+  margin-left: auto;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////// UI MODS */
@@ -168,6 +171,11 @@ ul.ui.list {
 
 /* /////////////////////////////////////////////////////////////////////////////////// RESIZE */
 @media screen and (max-width: 1200px) {
+  .ui.comments {
+    margin: none !important;
+    max-width: none !important;
+  }
+
   .sidebar {
     min-width: 100px;
     width: 100px;

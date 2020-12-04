@@ -12,9 +12,11 @@ const Input = ({ onSubmit, updateItem, setTerm, term, showEdit }) => {
               onChange={(e) => setTerm(e.currentTarget.value)}
             />
           </div>
-          <button className="mini ui button" onClick={onSubmit}>
-            Enter
-          </button>
+          <div className="enterbutton">
+            <button className="mini ui button" onClick={onSubmit}>
+              Enter
+            </button>
+          </div>
         </form>
       ) : (
         <form>
@@ -25,9 +27,11 @@ const Input = ({ onSubmit, updateItem, setTerm, term, showEdit }) => {
               onChange={(e) => setTerm(e.currentTarget.value)}
             />
           </div>
-          <button className="mini ui button" onClick={updateItem}>
-            Edit
-          </button>
+          <div className="enterbutton">
+            <button className="mini ui button" onClick={updateItem}>
+              Edit
+            </button>
+          </div>
         </form>
       )}
     </React.Fragment>
