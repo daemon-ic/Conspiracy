@@ -181,7 +181,7 @@ ul.ui.list {
     display: none !important;
   }
   .split {
-    position: none !important;
+    position: initial;
   }
 
   .ravens {
