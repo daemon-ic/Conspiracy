@@ -110,7 +110,6 @@ const Profile = ({ handleLogout, user }) => {
             </div>
           </div>
         </section>
-
         {
           //-----------------------------------------------------
         }

@@ -10,11 +10,11 @@ export const SidebarData = [
     link: "/",
   },
 
-  {
-    title: "Messages",
-    icon: <MailIcon />,
-    link: "/",
-  },
+  // {
+  //   title: "Messages",
+  //   icon: <MailIcon />,
+  //   link: "/",
+  // },
 
   {
     title: "Profile",

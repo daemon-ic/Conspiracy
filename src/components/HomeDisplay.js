@@ -10,6 +10,7 @@ const HomeDisplay = ({ items }) => {
           <div
             style={{
               borderBottom: "1px solid lightgray",
+              paddingBottom: "5px",
             }}
           >
             <div className="listmods1">

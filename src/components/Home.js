@@ -119,7 +119,6 @@ const Home = ({ handleLogout, user }) => {
           />
         </div>
       </div>
-
       <HomeDisplay items={items} deleteItem={deleteItem} editItem={editItem} />
     </React.Fragment>
   );

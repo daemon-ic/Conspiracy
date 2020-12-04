@@ -8,7 +8,6 @@ const Display = ({ items, deleteItem, editItem }) => {
       <ul className="ui list">
         {items.map((itemDisplay) => (
           <div
-            className="list"
             style={{
               borderBottom: "1px solid lightgray",
               paddingBottom: "5px",
@@ -23,7 +22,10 @@ const Display = ({ items, deleteItem, editItem }) => {
   </a> */}
                   <div class="content">
                     <a class="author">{itemDisplay.user}</a>
-                    <div class="metadata"></div>
+                    <div class="metadata">
+                      <span class="date">??? days ago</span>
+                    </div>
+
                     <div class="text">{itemDisplay.value}</div>
                     <div class="actions">
                       <a

@@ -5,7 +5,7 @@ const Input = ({ onSubmit, updateItem, setTerm, term, showEdit }) => {
     <React.Fragment>
       {showEdit ? (
         <form onSubmit={onSubmit}>
-          <div className="ui transparent input">
+          <div className="ui transparent input inputmod1">
             <input
               placeholder="What's happening?"
               value={term}
@@ -20,7 +20,7 @@ const Input = ({ onSubmit, updateItem, setTerm, term, showEdit }) => {
         </form>
       ) : (
         <form>
-          <div className="ui transparent input">
+          <div className="ui transparent input inputmod1">
             <input
               placeholder="What's happening?"
               value={term}
