@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from "react";
 import fire from "../Firebase";
 import storage from "../Firebase";
