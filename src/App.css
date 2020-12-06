@@ -20,6 +20,11 @@
   border-color: rgb(240, 240, 240);
 }
 
+.logo {
+  max-width: 30px;
+  max-height: 30px;
+}
+
 /* Background */
 
 body {
@@ -115,7 +120,7 @@ body {
 }
 
 .sidebarlist {
-  padding: 75px 0px 0px 90px;
+  padding: 15px 0px 0px 90px;
   margin: 0px;
   height: 100%;
   width: 100%;
@@ -193,7 +198,7 @@ ul.ui.list {
   }
 
   .sidebarlist {
-    padding: 75px 0px 0px 45px;
+    padding: 15px 0px 0px 45px;
   }
 
   .sidebarwords {
