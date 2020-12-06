@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import "firebase/firestore";
+import "firebase/storage";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDQc3O7BAMkM1FWLSxlQly3zzq8dcz49g8",
@@ -8,9 +9,11 @@ var firebaseConfig = {
   projectId: "twitter-clone-ec8f6",
   storageBucket: "twitter-clone-ec8f6.appspot.com",
   messagingSenderId: "642264567872",
-  appId: "1:642264567872:web:cce1eb507327ed97ed4fa5"
-  };
-  // Initialize Firebase
-  const fire = firebase.initializeApp(firebaseConfig);
+  appId: "1:642264567872:web:cce1eb507327ed97ed4fa5",
+};
+// Initialize Firebase
+const fire = firebase.initializeApp(firebaseConfig);
 
-  export default fire;
+const storage = firebase.storage();
+
+export { storage, fire as default };
