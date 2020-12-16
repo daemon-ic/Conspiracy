@@ -1,23 +1,28 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import fire from "../Firebase";
-import storage from "../Firebase";
+import { storage } from "../Firebase";
 
 const Upload = () => {
   const [image, setImage] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // const types = ["image/png", "image/jpg"];
 
   const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+    let selected = setImage(e.target.files[0]);
+
+    if (selected && types.includes(selected.type)) {
+      setImage(selected);
+      // setError(null);
     }
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`profilepic/Profile_Pic`).put(image);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      // (snapshot) => {},
       (error) => {
         console.log(error);
       },
@@ -32,9 +37,7 @@ const Upload = () => {
       }
     );
   };
-
   console.log("image: ", image);
-
   return (
     <React.Fragment>
       <input type="file" onChange={handleChange} />

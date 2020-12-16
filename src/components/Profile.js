@@ -6,6 +6,7 @@ import "../App.css";
 import Input from "./Input";
 import Display from "./Display";
 import Upload from "./Upload";
+import Upload2 from "./Upload2";
 import { v4 as uuidv4 } from "uuid";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
@@ -29,7 +30,6 @@ function useItems() {
       });
 
     return () => unsubscribe();
-    // Line 29:6:  React Hook useEffect has a missing dependency: 'authUser'. Either include it or remove the dependency array  react-
   }, []);
   return items;
 }
@@ -114,6 +114,7 @@ const Profile = ({ handleLogout, user }) => {
         {
           //-----------------------------------------------------
         }
+        <Upload2 />
         <div className="mainpanel">
           <br />
           <Input
@@ -123,7 +124,6 @@ const Profile = ({ handleLogout, user }) => {
             updateItem={updateItem}
             showEdit={showEdit}
           />
-          <Upload />
         </div>
       </div>
       <Display items={items} deleteItem={deleteItem} editItem={editItem} />

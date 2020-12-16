@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const Display = ({ items, deleteItem, editItem }) => {
+const Display = ({ items, deleteItem }) => {
   return (
     <React.Fragment>
       <ul className="ui list">
@@ -15,22 +15,22 @@ const Display = ({ items, deleteItem, editItem }) => {
           >
             <div className="listmods1">
               <div className="item" key={itemDisplay.id}></div>
-              <div class="ui comments">
-                <div class="comment">
+              <div className="ui comments">
+                <div className="comment">
                   {/* <a class="avatar">
     <img src="/images/avatar/small/christian.jpg"></img>
   </a> */}
-                  <div class="content">
-                    <a class="author">{itemDisplay.user}</a>
-                    <div class="metadata">
-                      <span class="date">??? days ago</span>
+                  <div className="content">
+                    <a className="author">{itemDisplay.user}</a>
+                    <div className="metadata">
+                      <span className="date">??? days ago</span>
                     </div>
 
-                    <div class="text">{itemDisplay.value}</div>
-                    <div class="actions">
+                    <div className="text">{itemDisplay.value}</div>
+                    <div className="actions">
                       <a
                         onClick={() => deleteItem(itemDisplay.id)}
-                        class="reply"
+                        className="reply"
                       >
                         Delete
                       </a>
@@ -40,16 +40,6 @@ const Display = ({ items, deleteItem, editItem }) => {
               </div>
             </div>
           </div>
-
-          // <div className="item" key={itemDisplay.id}>
-          //   {itemDisplay.value}
-          //   <button
-          //     onClick={() => deleteItem(itemDisplay.id)}
-          //     className="mini ui button"
-          //   >
-          //     x
-          //   </button>
-          // </div>
         ))}
       </ul>
     </React.Fragment>

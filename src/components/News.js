@@ -1,19 +1,50 @@
+/* eslint-disable */
 import React from "react";
 
 function News() {
   return (
-    <React.Fragment>
-      Future Updates <br />
-      ------------------------- <br />
-      - MESSAGES NOT YET ACTIVE <br />
-      - make the future updates tab look better <br />
-      - upload avatar + get them to show with posts <br />
-      - make the input status area look more appealing <br />
-      - fix errors with login page <br />
-      - make 'tweet button' on the sidebar with popout interface <br />
-      - make sidebar and updates pages fixed without overlapping <br />
-      - Learn about compound indexing to make profile posts in order <br />
-    </React.Fragment>
+    <div>
+      <div className="newsbox">
+        <div
+          style={{
+            paddingLeft: "30px",
+          }}
+        >
+          <h3> What's Happening </h3>
+          <div
+            style={{
+              padding: "0px",
+              margin: "0px",
+              fontSize: ".9em",
+            }}
+          >
+            [ My to-do list with this project ]
+          </div>
+        </div>
+        <br />
+        <div className="ui.comments comment">
+          <ul>
+            <li>
+              Learn about compound indexing to make profile posts in order
+            </li>
+            <li>
+              <h5>Upload avatar and get them to appear with posts</h5>
+            </li>
+            <li>Fix glitch when entering homepage</li>
+            <li>Fix errors and css with login page</li>
+            <li>Make 'Tweet' button on the sidebar with popout interface</li>
+            <li>Make popout interface with posts which allows commenting</li>
+            <li>Make 'Like' system</li>
+            <li>Make Bios</li>
+            <li>Upload Photos on posts</li>
+            <li>Possibly create 'DM's?</li>
+            <li>
+              <h5>Work on styling</h5>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
 
