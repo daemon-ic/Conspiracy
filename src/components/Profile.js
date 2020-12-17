@@ -5,8 +5,7 @@ import fire from "../Firebase";
 import "../App.css";
 import Input from "./Input";
 import Display from "./Display";
-import Upload from "./Upload";
-import Upload2 from "./Upload2";
+import Upload3 from "./Upload3";
 import { v4 as uuidv4 } from "uuid";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
@@ -114,7 +113,7 @@ const Profile = ({ handleLogout, user }) => {
         {
           //-----------------------------------------------------
         }
-        <Upload2 />
+        <Upload3 />
         <div className="mainpanel">
           <br />
           <Input
