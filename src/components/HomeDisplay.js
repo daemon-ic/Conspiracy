@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const HomeDisplay = ({ items }) => {
+const HomeDisplay = ({ items, imgUrl }) => {
   return (
     <React.Fragment>
       <ul className="ui list">
@@ -17,9 +17,17 @@ const HomeDisplay = ({ items }) => {
               <div className="item" key={itemDisplay.id}></div>
               <div class="ui comments">
                 <div class="comment">
-                  {/* <a class="avatar">
-                <img src="/images/avatar/small/christian.jpg"></img>
-              </a> */}
+                  <a class="avatar">
+                    {/* ------------------------------------------------------------------ */}
+                    <img
+                      className="alvinavatar"
+                      height="50"
+                      weight="50"
+                      src={imgUrl}
+                      alt={""}
+                    />
+                    {/* ------------------------------------------------------------------ */}
+                  </a>
                   <div class="content">
                     <a class="author">{itemDisplay.user}</a>
                     <div class="metadata">

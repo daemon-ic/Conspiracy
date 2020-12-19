@@ -180,6 +180,11 @@ body {
   border-radius: 20px;
 }
 
+.alvinavatar {
+  margin: 5px;
+  border-radius: 50%;
+}
+
 /* /////////////////////////////////////////////////////////////////////////////////// UI OVERRIDES */
 .inputmod1 {
   font-size: 1.3em !important;

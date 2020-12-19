@@ -2,17 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
+import { storage } from "../Firebase";
 import "../App.css";
-import Input from "./Input";
 import Display from "./Display";
-import Upload3 from "./Upload3";
-import { v4 as uuidv4 } from "uuid";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ChangeAvi from "./ChangeAvi";
 
 var itemsDB = fire.firestore().collection("items");
 
-//////////////////////////////////////////////////////////////////////
-
+// ------------------------------------------------------------ This is to render list items first and to make them usable
 function useItems() {
   const authUser = fire.auth().currentUser.email;
   const [items, setItems] = useState([]);
@@ -20,7 +18,7 @@ function useItems() {
   useEffect(() => {
     const unsubscribe = itemsDB
       .where("user", "==", authUser)
-      //.orderBy("timestamp")
+      //.orderBy("timestamp")------ needs to be fixed. compound indexes in firebase
       .onSnapshot((snapshot) => {
         const newItems = snapshot.docs.reverse().map((doc) => ({
           ...doc.data(),
@@ -32,59 +30,17 @@ function useItems() {
   }, []);
   return items;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////
-
-const Profile = ({ handleLogout, user }) => {
-  const [showEdit, setShowEdit] = useState(true);
+const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
   const items = useItems();
-  const [term, setTerm] = useState("");
-  const [updateId, setUpdateId] = useState(false);
 
   function deleteItem(itemId) {
     itemsDB.doc(itemId).delete();
   }
 
-  function editItem(itemDisplay) {
-    setTerm(itemDisplay.value);
-    setUpdateId(itemDisplay.id);
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    setShowEdit(false);
-  }
-
-  function updateItem(e) {
-    e.preventDefault();
-    setShowEdit(true);
-    console.log("term: ", term);
-
-    itemsDB
-      .doc(updateId)
-      .update({
-        value: term,
-      })
-      .then(() => {
-        setTerm("");
-      });
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    const authUser = fire.auth().currentUser.email;
-
-    const id = uuidv4();
-    itemsDB
-      .doc(id)
-      .set({
-        user: authUser,
-        id,
-        value: term,
-      })
-      .then(() => {
-        setTerm("");
-      });
-  }
-
-  /////////////////////////////////////////////////////////////
   return (
     <React.Fragment>
       <div className="homeheader">
@@ -100,6 +56,7 @@ const Profile = ({ handleLogout, user }) => {
             <div>
               <h2>Profile</h2>
             </div>
+
             <div
               style={{
                 paddingTop: "5px",
@@ -110,22 +67,32 @@ const Profile = ({ handleLogout, user }) => {
             </div>
           </div>
         </section>
-        {
-          //-----------------------------------------------------
-        }
-        <Upload3 />
-        <div className="mainpanel">
-          <br />
-          <Input
-            term={term}
-            setTerm={setTerm}
-            onSubmit={onSubmit}
-            updateItem={updateItem}
-            showEdit={showEdit}
+
+        <div>
+          {/* ------------------------------------------------------------------ */}
+
+          <div className="alvinavatar">
+            <img
+              className="alvinavatar"
+              height="140"
+              weight="140"
+              src={imgUrl}
+              alt={""}
+            />
+          </div>
+          {/* ------------------------------------------------------------------ */}
+
+          <ChangeAvi
+            imgUrl={imgUrl}
+            setImgUrl={setImgUrl}
+            firstFunction={firstFunction}
           />
         </div>
+
+        <div className="mainpanel" />
       </div>
-      <Display items={items} deleteItem={deleteItem} editItem={editItem} />
+
+      <Display items={items} deleteItem={deleteItem} imgUrl={imgUrl} />
     </React.Fragment>
   );
 };

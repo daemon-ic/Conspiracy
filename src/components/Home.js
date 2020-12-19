@@ -5,6 +5,7 @@ import Input from "./Input";
 import HomeDisplay from "./HomeDisplay";
 import { v4 as uuidv4 } from "uuid";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 var itemsDB = fire.firestore().collection("items");
 
 //////////////////////////////////////////////////////////////////////
@@ -27,7 +28,7 @@ function useItems() {
 
 ///////////////////////////////////////////////////////////////////////
 
-const Home = ({ handleLogout, user }) => {
+const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
   const [showEdit, setShowEdit] = useState(true);
   const items = useItems();
   const [term, setTerm] = useState("");
@@ -119,7 +120,12 @@ const Home = ({ handleLogout, user }) => {
           />
         </div>
       </div>
-      <HomeDisplay items={items} deleteItem={deleteItem} editItem={editItem} />
+      <HomeDisplay
+        items={items}
+        deleteItem={deleteItem}
+        editItem={editItem}
+        imgUrl={imgUrl}
+      />
     </React.Fragment>
   );
 };
