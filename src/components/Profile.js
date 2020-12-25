@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
 import { storage } from "../Firebase";
 import "../App.css";
-import Display from "./Display";
+import Display2 from "./Display2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChangeAvi from "./ChangeAvi";
 
@@ -92,7 +92,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         <div className="mainpanel" />
       </div>
 
-      <Display items={items} deleteItem={deleteItem} imgUrl={imgUrl} />
+      <Display2 items={items} deleteItem={deleteItem} imgUrl={imgUrl} />
     </React.Fragment>
   );
 };

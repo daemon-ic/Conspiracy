@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from "react";
 import fire from "../Firebase";
 
@@ -19,7 +21,7 @@ function useItems() {
   return userList;
 }
 
-const HomeDisplay = ({ items, deleteItem }) => {
+const Display2 = ({ items, deleteItem }) => {
   const [list, setList] = useState([]);
 
   const userList = useItems();
@@ -93,7 +95,14 @@ const HomeDisplay = ({ items, deleteItem }) => {
                       </div>
 
                       <div className="text">{itemDisplay.value}</div>
-                      <div className="actions"></div>
+                      <div className="actions">
+                        <a
+                          onClick={() => deleteItem(itemDisplay.id)}
+                          className="reply"
+                        >
+                          Delete
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -106,4 +115,4 @@ const HomeDisplay = ({ items, deleteItem }) => {
   );
 };
 
-export default HomeDisplay;
+export default Display2;

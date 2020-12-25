@@ -63,6 +63,7 @@ const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
   function onSubmit(e) {
     e.preventDefault();
     const authUser = fire.auth().currentUser.email;
+    // make name here
 
     const timestamp = Date.now();
     const id = uuidv4();

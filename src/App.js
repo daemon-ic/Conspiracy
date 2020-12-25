@@ -23,45 +23,44 @@ const App = () => {
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // FOR DISPLAY ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // FOR PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   const [imgUrl, setImgUrl] = useState(
     "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/Default_Image.jpg?alt=media&token=9a2333c8-56b9-45b4-9c70-f21c37760b71"
   );
 
   useEffect(() => {
-    const getPicFromUser = () => {
-      console.log("Getting Avatar URL from User File!");
-      const authUser = fire.auth().currentUser.email;
+    const getPicFromUser = async () => {
+      const authUser = await fire.auth().currentUser.email;
 
       usersDB
         .doc(authUser)
         .get()
         .then((snapshot) => {
           setImgUrl(snapshot.data().ProfilePicture);
+          // **** NEED TO MAKE CHECK FOR NO UPLOADED PROFILE PIC, THEN UPLOADED CAN REMAIN DEFAULT
         });
     };
-    console.log(imgUrl);
-    getPicFromUser();
+    // Callback : adding listener to FB auth state change. ( For firebase Auth specifically)
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        getPicFromUser();
+      }
+    });
   }, []);
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const firstFunction = async (e) => {
     // ------------------------------------------------------------ Saving image to storage
-    console.log(
-      "Saving Uploaded Pic to FirebaseStorage & generating Avatar URL!"
-    );
     const file = e.target.files[0];
-    // STORAGE NOT DEFINED FOR SOME REASON @#@!@#$%^&*(&^%$#@#$%^&*(^%$#@))
     const storageRef = storage.ref();
-    // *** Edit this to make each person have their own pic folder!#@$%^&$#@$%^&*^%$#!
-    // *** THEN DELETE EVERYTHING IN FOLDER PRIOR TO UPLOAD!!!!!!!
-    const fileRef = storageRef.child(`Profile_Pics/${file.name}`);
+    const authUser = fire.auth().currentUser.email;
+    const fileRef = storageRef.child(`profilePics/${authUser}/profilePic`);
     await fileRef.put(file);
     const downloadUrl = await fileRef.getDownloadURL();
 
     // ------------------------------------------------------------ Got Url and put in state
-    console.log("Saving Avatar URL into state!");
 
     setImgUrl(downloadUrl);
 
@@ -70,13 +69,11 @@ const App = () => {
   };
 
   const updateUser = async (downloadUrl) => {
-    console.log("Adding Avatar URL into User file!");
     const authUser = fire.auth().currentUser.email;
-    console.log(authUser);
     await usersDB.doc(authUser).update({ ProfilePicture: downloadUrl });
   };
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // FOR LOGIN //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // clear messages and inputs ---------------
   const clearInputs = () => {

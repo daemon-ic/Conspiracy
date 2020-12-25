@@ -185,6 +185,18 @@ body {
   border-radius: 50%;
 }
 
+.alvinavatar:hover > .overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 100;
+  display: block;
+}
+
 /* /////////////////////////////////////////////////////////////////////////////////// UI OVERRIDES */
 .inputmod1 {
   font-size: 1.3em !important;
