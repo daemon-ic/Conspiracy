@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
-import { storage } from "../Firebase";
 import "../App.css";
 import Display2 from "./Display2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";

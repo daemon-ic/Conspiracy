@@ -40,7 +40,6 @@ const App = () => {
         .get()
         .then((snapshot) => {
           setImgUrl(snapshot.data().ProfilePicture);
-          // **** NEED TO MAKE CHECK FOR NO UPLOADED PROFILE PIC, THEN UPLOADED CAN REMAIN DEFAULT
         });
     };
     // Callback : adding listener to FB auth state change. ( For firebase Auth specifically)

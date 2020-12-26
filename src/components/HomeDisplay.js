@@ -21,7 +21,7 @@ function useItems() {
   return userList;
 }
 
-const HomeDisplay = ({ items, deleteItem }) => {
+const HomeDisplay = ({ items }) => {
   const [list, setList] = useState([]);
 
   const userList = useItems();
@@ -75,15 +75,14 @@ const HomeDisplay = ({ items, deleteItem }) => {
                     <a class="avatar">
                       {/* ------------------------------------------------------------------ */}
 
-                      {getImg(itemDisplay.user) && (
-                        <img
-                          className="alvinavatar"
-                          height="50"
-                          weight="50"
-                          src={getImg(itemDisplay.user)}
-                          alt={""}
-                        />
-                      )}
+                      <img
+                        className="alvinavatar"
+                        height="50"
+                        weight="50"
+                        src={getImg(itemDisplay.user)}
+                        alt={""}
+                      />
+
                       {/* ------------------------------------------------------------------ */}
                     </a>
 
@@ -95,6 +94,15 @@ const HomeDisplay = ({ items, deleteItem }) => {
                       </div>
 
                       <div className="text">{itemDisplay.value}</div>
+                      {itemDisplay.pic ? (
+                        <img
+                          className="previewPic"
+                          height="400"
+                          width="400"
+                          src={itemDisplay.pic}
+                          alt={""}
+                        />
+                      ) : null}
                       <div className="actions"></div>
                     </div>
                   </div>

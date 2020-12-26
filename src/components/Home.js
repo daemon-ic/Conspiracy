@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
 import "../App.css";
@@ -5,6 +7,7 @@ import Input from "./Input";
 import HomeDisplay from "./HomeDisplay";
 import { v4 as uuidv4 } from "uuid";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { storage } from "../Firebase";
 
 var itemsDB = fire.firestore().collection("items");
 
@@ -29,42 +32,39 @@ function useItems() {
 ///////////////////////////////////////////////////////////////////////
 
 const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
-  const [showEdit, setShowEdit] = useState(true);
   const items = useItems();
   const [term, setTerm] = useState("");
-  const [updateId, setUpdateId] = useState(false);
+  const [postImg, setPostImg] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
 
-  function deleteItem(itemId) {
-    itemsDB.doc(itemId).delete();
-  }
+  ///////////////////////////////////////////////////////////////////////
 
-  function editItem(itemDisplay) {
-    setTerm(itemDisplay.value);
-    setUpdateId(itemDisplay.id);
+  const uploadPhoto = async (e) => {
+    setShowPreview(true);
 
-    setShowEdit(false);
-  }
+    const file = e.target.files[0];
+    const randNum = uuidv4();
 
-  function updateItem(e) {
-    e.preventDefault();
-    setShowEdit(true);
-    console.log("term: ", term);
+    // i dont want to save the preview to storage
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(`postPics/${file.name}_${randNum}`);
+    await fileRef.put(file);
 
-    itemsDB
-      .doc(updateId)
-      .update({
-        value: term,
-      })
-      .then(() => {
-        setTerm("");
-      });
-  }
+    // but this gets the Url that I need... maybe make a preview folder then delete the preview on real upload
+    const downloadUrl = await fileRef.getDownloadURL();
+    setPostImg(downloadUrl);
+  };
+
+  const clearPhoto = () => {
+    setPostImg("");
+    setShowPreview(false);
+  };
+
+  //////////////////////////////////////////////////////////////
 
   function onSubmit(e) {
     e.preventDefault();
     const authUser = fire.auth().currentUser.email;
-    // make name here
-
     const timestamp = Date.now();
     const id = uuidv4();
 
@@ -75,8 +75,11 @@ const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         user: authUser,
         id,
         value: term,
+        pic: postImg,
       })
       .then(() => {
+        setPostImg("");
+        setShowPreview(false);
         setTerm("");
       });
   }
@@ -113,20 +116,17 @@ const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         <div className="mainpanel">
           <br />
           <Input
+            clearPhoto={clearPhoto}
+            uploadPhoto={uploadPhoto}
+            postImg={postImg}
+            showPreview={showPreview}
             term={term}
             setTerm={setTerm}
             onSubmit={onSubmit}
-            updateItem={updateItem}
-            showEdit={showEdit}
           />
         </div>
       </div>
-      <HomeDisplay
-        items={items}
-        deleteItem={deleteItem}
-        editItem={editItem}
-        imgUrl={imgUrl}
-      />
+      <HomeDisplay items={items} imgUrl={imgUrl} />
     </React.Fragment>
   );
 };

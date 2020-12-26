@@ -182,7 +182,7 @@ body {
 
 .alvinavatar {
   margin: 5px;
-  border-radius: 50%;
+  border-radius: 200px;
 }
 
 .alvinavatar:hover > .overlay {
@@ -195,6 +195,52 @@ body {
   opacity: 0.5;
   z-index: 100;
   display: block;
+}
+
+.prevPicContainer {
+  display: flex;
+}
+.prevPicDiv {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgBorder {
+  position: relative;
+  background-color: #e0e1e2;
+  margin: 15px;
+  border-radius: 30px;
+  height: 400px;
+  width: 400px;
+}
+.previewPic {
+  position: relative;
+  border-radius: 30px;
+}
+
+.previewPicCancel {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 40px;
+  left: 40px;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: black;
+  opacity: 0.5;
+  color: white;
+  font-size: 16px;
+  padding: 24px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.prevPicDiv .previewPicCancel:hover {
+  background-color: black;
+  opacity: 1;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////// UI OVERRIDES */

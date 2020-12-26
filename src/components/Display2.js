@@ -75,15 +75,14 @@ const Display2 = ({ items, deleteItem }) => {
                     <a class="avatar">
                       {/* ------------------------------------------------------------------ */}
 
-                      {getImg(itemDisplay.user) && (
-                        <img
-                          className="alvinavatar"
-                          height="50"
-                          weight="50"
-                          src={getImg(itemDisplay.user)}
-                          alt={""}
-                        />
-                      )}
+                      <img
+                        className="alvinavatar"
+                        height="50"
+                        weight="50"
+                        src={getImg(itemDisplay.user)}
+                        alt={""}
+                      />
+
                       {/* ------------------------------------------------------------------ */}
                     </a>
 
@@ -95,6 +94,15 @@ const Display2 = ({ items, deleteItem }) => {
                       </div>
 
                       <div className="text">{itemDisplay.value}</div>
+                      {itemDisplay.pic ? (
+                        <img
+                          className="previewPic"
+                          height="400"
+                          width="400"
+                          src={itemDisplay.pic}
+                          alt={""}
+                        />
+                      ) : null}
                       <div className="actions">
                         <a
                           onClick={() => deleteItem(itemDisplay.id)}
