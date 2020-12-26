@@ -132,6 +132,8 @@ const App = () => {
     usersDB.doc(id).set({
       Email: email,
       FullName: name,
+      ProfilePicture:
+        "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/Default_Image.jpg?alt=media&token=9a2333c8-56b9-45b4-9c70-f21c37760b71",
     });
   };
 
