@@ -28,7 +28,7 @@ const App = () => {
   // FOR PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [imgUrl, setImgUrl] = useState(
-    "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/Default_Image.jpg?alt=media&token=9a2333c8-56b9-45b4-9c70-f21c37760b71"
+    "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/profilePics%2Fdefault%2FDefault_Image.jpg?alt=media&token=7231ff52-cf7e-49a7-aa31-d19f0fa99337"
   );
 
   useEffect(() => {
@@ -133,7 +133,7 @@ const App = () => {
       Email: email,
       FullName: name,
       ProfilePicture:
-        "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/Default_Image.jpg?alt=media&token=9a2333c8-56b9-45b4-9c70-f21c37760b71",
+        "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/profilePics%2Fdefault%2FDefault_Image.jpg?alt=media&token=7231ff52-cf7e-49a7-aa31-d19f0fa99337",
     });
   };
 
