@@ -31,7 +31,13 @@ function useItems() {
 
 ///////////////////////////////////////////////////////////////////////
 
-const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
+const Home = ({
+  authUser2,
+  handleLogout,
+  imgUrl,
+  setImgUrl,
+  firstFunction,
+}) => {
   const items = useItems();
   const [term, setTerm] = useState("");
   const [postImg, setPostImg] = useState("");
@@ -76,6 +82,7 @@ const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         id,
         value: term,
         pic: postImg,
+        likes: [],
       })
       .then(() => {
         setPostImg("");
@@ -126,7 +133,7 @@ const Home = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
           />
         </div>
       </div>
-      <HomeDisplay items={items} imgUrl={imgUrl} />
+      <HomeDisplay authUser2={authUser2} items={items} imgUrl={imgUrl} />
     </React.Fragment>
   );
 };

@@ -27,7 +27,6 @@ const Display2 = ({ items, deleteItem }) => {
   const userList = useItems();
 
   useEffect(() => {
-    console.log("useEffect fired!---------------------------");
     let usersPics = [];
 
     const userLoop = () => {
@@ -55,6 +54,32 @@ const Display2 = ({ items, deleteItem }) => {
     }
   };
 
+  const timestamp = (itemDisplayTimestamp) => {
+    const result = Date.now() - itemDisplayTimestamp;
+    const seconds = result / 1000;
+    const minutes = seconds / 60;
+    const hours = minutes / 60;
+    const days = hours / 24;
+    const weeks = days / 7;
+    const months = weeks / 4;
+    const years = months / 12;
+
+    if (seconds < 60) {
+      return "Just now";
+    } else if (minutes < 60) {
+      return Math.floor(minutes) + "m";
+    } else if (hours < 24) {
+      return Math.floor(hours) + "h";
+    } else if (days < 7) {
+      return Math.floor(days) + "d";
+    } else if (weeks < 4) {
+      return Math.floor(weeks) + "w";
+    } else if (months < 12) {
+      return Math.floor(months) + "mo";
+    } else {
+      return Math.floor(years) + "y";
+    }
+  };
   //-------------------------------------------------------------
   return (
     <React.Fragment>
@@ -90,7 +115,9 @@ const Display2 = ({ items, deleteItem }) => {
                       <a className="author">{itemDisplay.user}</a>
 
                       <div className="metadata">
-                        <span className="date">??? days ago</span>
+                        <span className="date">
+                          {timestamp(itemDisplay.timestamp)}
+                        </span>
                       </div>
 
                       <div className="text">{itemDisplay.value}</div>

@@ -27,11 +27,6 @@ function News() {
             <li>
               Learn about compound indexing to make profile posts in order
             </li>
-            <li>
-              <h5>Troubleshoot avatars not working correctly</h5>
-            </li>
-            <li>Upload Photos on posts</li>
-            <li>Make 'Like' system</li>
             <li>Make Bios</li>
             <li>Visit other people's pages</li>
             <li>Make 'Tweet' button on the sidebar with popout interface</li>

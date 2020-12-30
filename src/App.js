@@ -22,8 +22,7 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
-
-  // FOR DISPLAY ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const [authUser2, setAuthUser2] = useState("");
 
   // FOR PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +33,7 @@ const App = () => {
   useEffect(() => {
     const getPicFromUser = async () => {
       const authUser = await fire.auth().currentUser.email;
+      setAuthUser2(authUser);
 
       usersDB
         .doc(authUser)
@@ -173,6 +173,7 @@ const App = () => {
 
               <div className="child2">
                 <Home
+                  authUser2={authUser2}
                   handleLogout={handleLogout}
                   user={user}
                   imgUrl={imgUrl}
