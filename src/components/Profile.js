@@ -10,6 +10,7 @@ import ChangeAvi from "./ChangeAvi";
 var itemsDB = fire.firestore().collection("items");
 
 // ------------------------------------------------------------ This is to render list items first and to make them usable
+
 function useItems() {
   const authUser = fire.auth().currentUser.email;
   const [items, setItems] = useState([]);
@@ -68,6 +69,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         </section>
 
         <div>
+          
           {/* ------------------------------------------------------------------ */}
 
           <div className="alvinavatar">
@@ -79,6 +81,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
               alt={""}
             />
           </div>
+
           {/* ------------------------------------------------------------------ */}
 
           <ChangeAvi

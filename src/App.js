@@ -23,17 +23,32 @@ const App = () => {
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
   const [authUser2, setAuthUser2] = useState("");
+  let UID = "";
 
   // FOR PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+  //---------------------------------------------------------- Default image for Avi in state
 
   const [imgUrl, setImgUrl] = useState(
     "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/profilePics%2Fdefault%2FDefault_Image.jpg?alt=media&token=7231ff52-cf7e-49a7-aa31-d19f0fa99337"
   );
 
+  //----------------------------------------------------------- On mount
+
   useEffect(() => {
+
+
     const getPicFromUser = async () => {
       const authUser = await fire.auth().currentUser.email;
       setAuthUser2(authUser);
+
+      const getUid = await fire.auth().currentUser.uid;
+      UID = getUid;
+      console.log("useEffect UID log: ", UID )
+
+
+  //------------------------------------------------------------ Get avi image from User docs and save url to state
 
       usersDB
         .doc(authUser)
@@ -42,16 +57,22 @@ const App = () => {
           setImgUrl(snapshot.data().ProfilePicture);
         });
     };
+
     // Callback : adding listener to FB auth state change. ( For firebase Auth specifically)
+
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         getPicFromUser();
       }
     });
+
+
   }, []);
 
   const firstFunction = async (e) => {
-    // ------------------------------------------------------------ Saving image to storage
+
+    // ------------------------------------------------------------ Saving Avi upload to storage and then get URL
+
     const file = e.target.files[0];
     const storageRef = storage.ref();
     const authUser = fire.auth().currentUser.email;
@@ -63,7 +84,8 @@ const App = () => {
 
     setImgUrl(downloadUrl);
 
-    //------------------------------------------------------------- Fire linking to user
+    //------------------------------------------------------------- Take Avi URL and place in User doc
+
     updateUser(downloadUrl);
   };
 
@@ -74,18 +96,23 @@ const App = () => {
 
   // FOR LOGIN //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // clear messages and inputs ---------------
+    //------------------------------------------------------------- Clear login inputs 
+
   const clearInputs = () => {
     setEmail("");
     setPassword("");
   };
+
+
+    //------------------------------------------------------------- Clear login errors
 
   const clearErrors = () => {
     setEmailError("");
     setPasswordError("");
   };
 
-  // auth error codes and signing in ----------------
+     //------------------------------------------------------------- Login stuff
+
   const handleLogin = () => {
     clearErrors();
     fire
@@ -106,8 +133,10 @@ const App = () => {
       });
   };
 
-  // auth error codes and signing up ----------------
-  const handleSignup = () => {
+     //------------------------------------------------------------- Login stuff
+
+    const handleSignup = () => {
+      console.log("Fire handleSignup");
     clearErrors();
     fire
       .auth()
@@ -126,6 +155,8 @@ const App = () => {
         }
       });
 
+      console.log("Signup UID log:", UID);
+
     // info that's stored in firestore -----------------
     const id = email;
     usersDB.doc(id).set({
@@ -133,10 +164,20 @@ const App = () => {
       FullName: name,
       ProfilePicture:
         "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/profilePics%2Fdefault%2FDefault_Image.jpg?alt=media&token=7231ff52-cf7e-49a7-aa31-d19f0fa99337",
-    });
+      
+
+        
+
+      });
+      
+
+      
   };
 
+
+
   // logout button ---------------------
+
   const handleLogout = () => {
     window.location.pathname = "/";
     fire.auth().signOut();
