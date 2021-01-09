@@ -183,6 +183,7 @@ body {
 .alvinavatar {
   margin: 5px;
   border-radius: 200px;
+  cursor: pointer;
 }
 
 .alvinavatar:hover > .overlay {

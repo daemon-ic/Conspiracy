@@ -1,12 +1,43 @@
-import React from "react";
-import { SidebarData } from "./SidebarData";
+/* eslint-disable */
 
-function Sidebar() {
+import React from "react";
+import HomeIcon from "@material-ui/icons/Home";
+import MailIcon from "@material-ui/icons/Mail";
+import PersonIcon from "@material-ui/icons/Person";
+import logo from "../images/raven-logo.png";
+
+function Sidebar({ UID }) {
+  const sidebarData = [
+    {
+      title: "",
+      icon: <img className="logo" src={logo} alt="logo" />,
+      link: "/",
+    },
+
+    {
+      title: "Home",
+      icon: <HomeIcon />,
+      link: "/",
+    },
+
+    // {
+    //   title: "Messages",
+    //   icon: <MailIcon />,
+    //   link: "/",
+    // },
+
+    {
+      title: "Profile",
+      icon: <PersonIcon />,
+      link: "/profile/" + UID,
+    },
+  ];
+
   return (
     <React.Fragment>
       <div>
         <ul className="sidebarlist">
-          {SidebarData.map((val, key) => {
+          {sidebarData.map((val, key) => {
             return (
               <li
                 key={key}

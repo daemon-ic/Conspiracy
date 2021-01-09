@@ -31,13 +31,7 @@ function useItems() {
 
 ///////////////////////////////////////////////////////////////////////
 
-const Home = ({
-  authUser2,
-  handleLogout,
-  imgUrl,
-  setImgUrl,
-  firstFunction,
-}) => {
+const Home = ({ authUser2, handleLogout, imgUrl }) => {
   const items = useItems();
   const [term, setTerm] = useState("");
   const [postImg, setPostImg] = useState("");
@@ -70,6 +64,7 @@ const Home = ({
 
   function onSubmit(e) {
     e.preventDefault();
+    const betterUID = fire.auth().currentUser.uid;
     const authUser = fire.auth().currentUser.email;
     const timestamp = Date.now();
     const id = uuidv4();
@@ -78,6 +73,7 @@ const Home = ({
       .doc(id)
       .set({
         timestamp,
+        uid: betterUID,
         user: authUser,
         id,
         value: term,

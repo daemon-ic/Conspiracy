@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React, { useEffect, useState } from "react";
-import fire from ".S./Firebase";
+import fire from "../Firebase";
 import "../App.css";
 import Display2 from "./Display2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -69,7 +69,6 @@ const VisitUser = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         </section>
 
         <div>
-          
           {/* ------------------------------------------------------------------ */}
 
           <div className="alvinavatar">
@@ -171,7 +170,6 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         </section>
 
         <div>
-          
           {/* ------------------------------------------------------------------ */}
 
           <div className="alvinavatar">

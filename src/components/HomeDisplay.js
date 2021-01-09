@@ -6,6 +6,8 @@ import fire from "../Firebase";
 var usersDB = fire.firestore().collection("users");
 var itemsDB = fire.firestore().collection("items");
 
+// -------------------------------------------------------------- Display list on mount and make it usable
+
 function useItems() {
   const [userList, setUserList] = useState([]);
 
@@ -22,14 +24,12 @@ function useItems() {
   return userList;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ----------------------------------------------------------------- Main component
 
 const HomeDisplay = ({ items, authUser2 }) => {
   const [list, setList] = useState([]);
 
   const userList = useItems();
-
-  // FOR AVATARS /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     let usersPics = [];
@@ -39,8 +39,8 @@ const HomeDisplay = ({ items, authUser2 }) => {
         const picList = {
           email: userList[i].Email,
           pic: userList[i].ProfilePicture,
+          uid: userList[i].UID,
         };
-
         usersPics.push(picList);
       }
     };
@@ -51,6 +51,8 @@ const HomeDisplay = ({ items, authUser2 }) => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // ----------------------------------------------------------------- Handle Getting image?
+
   const getImg = (itemDisplayUser) => {
     if (list[0]) {
       let result = list.filter((newList) => {
@@ -60,6 +62,8 @@ const HomeDisplay = ({ items, authUser2 }) => {
       return result[0].pic;
     }
   };
+
+  // ----------------------------------------------------------------- Handle Timestamp
 
   const timestamp = (itemDisplayTimestamp) => {
     const result = Date.now() - itemDisplayTimestamp;
@@ -88,6 +92,8 @@ const HomeDisplay = ({ items, authUser2 }) => {
     }
   };
 
+  // ----------------------------------------------------------------- Handle Liking
+
   const likePost = (itemDisplayLikes, itemDisplayId) => {
     itemsDB
       .doc(itemDisplayId)
@@ -102,12 +108,14 @@ const HomeDisplay = ({ items, authUser2 }) => {
     itemsDB.doc(itemDisplayId).update({ likes: newArray });
   };
 
-  // const unlikePost = (itemDisplayId) => {
-  //   itemsDB.doc(itemDisplayId).delete({ likes: authUser2 });
-  // };
+  // ----------------------------------------------------------------- Handle UID
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //-------------------------------------------------------------
+  const useUID = (userID) => {
+    console.log(userID);
+  };
+
+  // RENDER ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <React.Fragment>
       <ul className="ui list">
@@ -127,7 +135,6 @@ const HomeDisplay = ({ items, authUser2 }) => {
 
           //----------------------------------------------------------- Display number of likes
 
-          //-----------------------------------------------------
           return (
             <div
               style={{
@@ -147,6 +154,7 @@ const HomeDisplay = ({ items, authUser2 }) => {
                         height="50"
                         weight="50"
                         src={getImg(itemDisplay.user)}
+                        onClick={() => useUID(itemDisplay.uid)}
                         alt={""}
                       />
 
@@ -154,7 +162,12 @@ const HomeDisplay = ({ items, authUser2 }) => {
                     </a>
 
                     <div className="content">
-                      <a className="author">{itemDisplay.user}</a>
+                      <a
+                        className="author"
+                        onClick={() => useUID(itemDisplay.uid)}
+                      >
+                        {itemDisplay.user}
+                      </a>
 
                       <div className="metadata">
                         <span className="date">

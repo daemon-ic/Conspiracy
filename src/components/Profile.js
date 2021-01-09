@@ -7,32 +7,77 @@ import Display2 from "./Display2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChangeAvi from "./ChangeAvi";
 
-var itemsDB = fire.firestore().collection("items");
+// DECLARES DATABASES
 
-// ------------------------------------------------------------ This is to render list items first and to make them usable
+var itemsDB = fire.firestore().collection("items");
+var usersDB = fire.firestore().collection("users");
+
+// A FUNCTION THAT READS THE FIREBASE AND THEN MAKES IT USEABLE
 
 function useItems() {
-  const authUser = fire.auth().currentUser.email;
+  // SETTING VARIABLES AND STATES
+
   const [items, setItems] = useState([]);
+  let userList = [];
+  let currentUser = "";
+
+  // USEEFFECT HOOK
 
   useEffect(() => {
-    const unsubscribe = itemsDB
-      .where("user", "==", authUser)
-      //.orderBy("timestamp")------ needs to be fixed. compound indexes in firebase
-      .onSnapshot((snapshot) => {
-        const newItems = snapshot.docs.reverse().map((doc) => ({
+    // ON PAGE LOAD, GET THE LIST OF USERS
+
+    const handleUID = async () => {
+      await usersDB.get().then((snapshot) => {
+        const results = snapshot.docs.map((doc) => ({
           ...doc.data(),
         }));
-        setItems(newItems);
+
+        // SAVE THE USER LIST TO A PREVIOUSLY SET VARIABLE
+
+        userList = results;
       });
 
-    return () => unsubscribe();
+      // GET THE UID WITHIN THE URL
+
+      const urlArr = window.location.pathname.split("/");
+      const UID = urlArr[2];
+
+      // CHECK THE USER LIST FOR THE UID, AND RETURN THAT USERS EMAIL
+
+      for (let i = 0; i < userList.length; i++) {
+        if (UID === userList[i].UID) {
+          console.log(userList[i]);
+          currentUser = userList[i];
+        }
+      }
+
+      // THIS IS TO GET THE LIST OF POSTS FROM FIREBASE AND MAKE IT USEABLE
+
+      const unsubscribe = itemsDB // declares unique variable to onSnapshot
+        .where("user", "==", currentUser.Email) // compares user value to URL user in order to display the right posts
+
+        //.orderBy("timestamp")----------------------------------------------------- NEEDS TO BE FIXED WITH COMPOUND UPDATES IN FIREBASE ***
+
+        .onSnapshot((snapshot) => {
+          // updates list every time there is an update
+          const newItems = snapshot.docs.reverse().map((doc) => ({
+            // show the list of all post data
+            ...doc.data(),
+          }));
+          setItems(newItems); //set it to state
+        });
+
+      return () => unsubscribe(); // calls its own function when page is loaded
+    };
+    handleUID();
   }, []);
+  // return { items, currentUser }; // ????
   return items;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
+  // const { items, currentUser } = useItems(); // < --------- this is the issue on display 2
   const items = useItems();
 
   function deleteItem(itemId) {
@@ -42,6 +87,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
+    // currentUser && (
     <React.Fragment>
       <div className="homeheader">
         <section>
@@ -69,7 +115,6 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         </section>
 
         <div>
-          
           {/* ------------------------------------------------------------------ */}
 
           <div className="alvinavatar">
@@ -86,6 +131,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
 
           <ChangeAvi
             imgUrl={imgUrl}
+            // imgUrl={currentUser.ProfilePicture}
             setImgUrl={setImgUrl}
             firstFunction={firstFunction}
           />
@@ -93,7 +139,7 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
 
         <div className="mainpanel" />
       </div>
-
+      {/* WILL HAVE TO CHANGE img url to current user VVVV */}
       <Display2 items={items} deleteItem={deleteItem} imgUrl={imgUrl} />
     </React.Fragment>
   );
