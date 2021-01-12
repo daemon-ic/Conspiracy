@@ -21,7 +21,7 @@ const App = () => {
   const [name, setName] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [hasAccount, setHasAccount] = useState(false);
+  const [hasAccount, setHasAccount] = useState(true);
   const [authUser2, setAuthUser2] = useState("");
   const [UID, setUID] = useState("");
   const [windowLocationState, setWindowLocationState] = useState("");
@@ -103,6 +103,8 @@ const App = () => {
     //------------------------------------------------------------- Take Avi URL and place in User doc
 
     updateUser(downloadUrl);
+
+    location.reload();
   };
 
   const updateUser = async (downloadUrl) => {
@@ -153,7 +155,6 @@ const App = () => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
-
       .catch((err) => {
         switch (err.code) {
           case "auth/email-already-in-use":
@@ -225,8 +226,10 @@ const App = () => {
                   firstFunction={firstFunction}
                 />
               </div>
-              <div className="news">
-                <News />
+              <div className="newscontainer">
+                <div className="news">
+                  <News />
+                </div>
               </div>
             </div>
           </Route>
@@ -246,8 +249,10 @@ const App = () => {
                   firstFunction={firstFunction}
                 />
               </div>
-              <div className="news">
-                <News />
+              <div className="newscontainer">
+                <div className="news">
+                  <News />
+                </div>
               </div>
             </div>
           </Route>

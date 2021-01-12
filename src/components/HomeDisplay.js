@@ -111,6 +111,7 @@ const HomeDisplay = ({ items, authUser2 }) => {
   // ----------------------------------------------------------------- Handle UID
 
   const useUID = (userID) => {
+    window.location.pathname = "/profile/" + userID;
     console.log(userID);
   };
 

@@ -5,56 +5,39 @@ import fire from "../Firebase";
 import "../App.css";
 import Display2 from "./Display2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import ChangeAvi from "./ChangeAvi";
-
-// DECLARES DATABASES
 
 var itemsDB = fire.firestore().collection("items");
 var usersDB = fire.firestore().collection("users");
 
-// A FUNCTION THAT READS THE FIREBASE AND THEN MAKES IT USEABLE
-
 function useItems() {
-  // SETTING VARIABLES AND STATES
-
   const [items, setItems] = useState([]);
-  let userList = [];
-  let currentUser = "";
+  const [currentUser, setCurrentUser] = useState("");
 
-  // USEEFFECT HOOK
+  let userList = [];
+  let currentUserEmail = "";
 
   useEffect(() => {
-    // ON PAGE LOAD, GET THE LIST OF USERS
-
     const handleUID = async () => {
       await usersDB.get().then((snapshot) => {
         const results = snapshot.docs.map((doc) => ({
           ...doc.data(),
         }));
 
-        // SAVE THE USER LIST TO A PREVIOUSLY SET VARIABLE
-
         userList = results;
       });
-
-      // GET THE UID WITHIN THE URL
 
       const urlArr = window.location.pathname.split("/");
       const UID = urlArr[2];
 
-      // CHECK THE USER LIST FOR THE UID, AND RETURN THAT USERS EMAIL
-
       for (let i = 0; i < userList.length; i++) {
         if (UID === userList[i].UID) {
-          console.log(userList[i]);
-          currentUser = userList[i];
+          setCurrentUser(userList[i]);
+          currentUserEmail = userList[i].Email;
         }
       }
 
-      // THIS IS TO GET THE LIST OF POSTS FROM FIREBASE AND MAKE IT USEABLE
-
-      const unsubscribe = itemsDB // declares unique variable to onSnapshot
-        .where("user", "==", currentUser.Email) // compares user value to URL user in order to display the right posts
+      const unsubscribe = itemsDB
+        .where("user", "==", currentUserEmail)
 
         //.orderBy("timestamp")----------------------------------------------------- NEEDS TO BE FIXED WITH COMPOUND UPDATES IN FIREBASE ***
 
@@ -71,23 +54,28 @@ function useItems() {
     };
     handleUID();
   }, []);
-  // return { items, currentUser }; // ????
-  return items;
+
+  return { items, currentUser }; // ????
+
+  // return items;
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
-  // const { items, currentUser } = useItems(); // < --------- this is the issue on display 2
-  const items = useItems();
+  const items = useItems(); // < --------- this is the issue on display 2
+
+  const loggedInUser = fire.auth().currentUser.uid;
+  const urlUser = items.currentUser.UID;
 
   function deleteItem(itemId) {
     itemsDB.doc(itemId).delete();
+    console.log("authUser: ", loggedInUser);
+    console.log("urlUser: ", urlUser);
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-    // currentUser && (
     <React.Fragment>
       <div className="homeheader">
         <section>
@@ -115,32 +103,35 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
         </section>
 
         <div>
-          {/* ------------------------------------------------------------------ */}
+          {/* ------------------------------------------------------------------ PROFILE PICTURE */}
 
           <div className="alvinavatar">
             <img
               className="alvinavatar"
               height="140"
               weight="140"
-              src={imgUrl}
+              src={items.currentUser.ProfilePicture}
               alt={""}
             />
           </div>
 
-          {/* ------------------------------------------------------------------ */}
-
-          <ChangeAvi
-            imgUrl={imgUrl}
-            // imgUrl={currentUser.ProfilePicture}
-            setImgUrl={setImgUrl}
-            firstFunction={firstFunction}
-          />
+          {/* ------------------------------------------------------------------ CHANGE AVATAR */}
+          {loggedInUser === urlUser ? (
+            <form>
+              <input type="file" onChange={firstFunction} />
+            </form>
+          ) : null}
         </div>
 
         <div className="mainpanel" />
       </div>
-      {/* WILL HAVE TO CHANGE img url to current user VVVV */}
-      <Display2 items={items} deleteItem={deleteItem} imgUrl={imgUrl} />
+      <Display2
+        loggedInUser={loggedInUser}
+        urlUser={urlUser}
+        items={items.items}
+        deleteItem={deleteItem}
+        imgUrl={imgUrl}
+      />
     </React.Fragment>
   );
 };

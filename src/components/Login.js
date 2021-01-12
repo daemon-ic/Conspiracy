@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import TextField from "@material-ui/core/TextField";
 
 const Login = ({
   email,
@@ -17,46 +18,57 @@ const Login = ({
 }) => {
   return (
     <div>
-      <div className="ui stacked segment">
+      <div
+        className="ui stacked segment"
+        style={{
+          width: "250px",
+          paddingTop: "40px",
+          paddingBottom: "40px",
+        }}
+      >
         <h1> Conspiracy </h1>
         <p> It's like Twitter, but edgy. </p>
-        <div className="ui input">
-          <input
-            placeholder="Email"
-            type="text"
-            autoFocus
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+
+        <TextField
+          style={{
+            paddingTop: "10px",
+            paddingBottom: "10px",
+          }}
+          id="standard-basic"
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         {hasAccount ? null : (
           <React.Fragment>
             <br />
-            <div className="ui input">
-              <input
-                placeholder="Full Name"
-                type="text"
-                autoFocus
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
+
+            <TextField
+              style={{
+                paddingTop: "10px",
+                paddingBottom: "10px",
+              }}
+              id="standard-basic"
+              label="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </React.Fragment>
         )}
-
         <br />
-        <div className="ui input">
-          <input
-            placeholder="Password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+
+        <TextField
+          style={{
+            paddingTop: "10px",
+            paddingBottom: "10px",
+          }}
+          id="standard-basic"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
       <p>{emailError}</p>
       <p>{passwordError}</p>
@@ -91,6 +103,7 @@ const Login = ({
             >
               Sign Up
             </button>
+
             <br />
             <p>
               Already have an account?{" "}

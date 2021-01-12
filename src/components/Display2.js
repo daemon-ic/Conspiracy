@@ -21,7 +21,7 @@ function useItems() {
   return userList;
 }
 
-const Display2 = ({ items, deleteItem }) => {
+const Display2 = ({ loggedInUser, urlUser, items, deleteItem }) => {
   const [list, setList] = useState([]);
 
   const userList = useItems();
@@ -130,14 +130,17 @@ const Display2 = ({ items, deleteItem }) => {
                           alt={""}
                         />
                       ) : null}
-                      <div className="actions">
-                        <a
-                          onClick={() => deleteItem(itemDisplay.id)}
-                          className="reply"
-                        >
-                          Delete
-                        </a>
-                      </div>
+                      {/*---------------------------------------------------------------- DELETE BUTTON*/}
+                      {loggedInUser === urlUser ? (
+                        <div className="actions">
+                          <a
+                            onClick={() => deleteItem(itemDisplay.id)}
+                            className="reply"
+                          >
+                            Delete
+                          </a>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </div>
