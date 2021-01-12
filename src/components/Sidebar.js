@@ -20,12 +20,6 @@ function Sidebar({ UID }) {
       link: "/",
     },
 
-    // {
-    //   title: "Messages",
-    //   icon: <MailIcon />,
-    //   link: "/",
-    // },
-
     {
       title: "Profile",
       icon: <PersonIcon />,

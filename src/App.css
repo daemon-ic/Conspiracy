@@ -76,7 +76,7 @@ body {
   width: 100vw;
   height: 100vh;
 }
-/* ///////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////// */
 .input {
   width: 250px;
   padding: 10px;
@@ -88,6 +88,42 @@ body {
   height: 25px;
 }
 
+/* I MIGHT WANT TO CHANGE MARGIN LEFT AT SOME POINT */
+.child2 {
+  width: 100%;
+  margin-left: 320px;
+  overflow-y: scroll;
+  height: 100vh;
+}
+/* Sidebar */
+
+/* Main App */
+.alvinmain {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: blue;
+}
+
+.postname {
+  font-weight: bold;
+}
+
+.font1 {
+  font-size: 20px;
+}
+
+.mainpanel {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.enterbutton {
+  margin-left: auto;
+}
+
+/* Main Page ---------------------------------------------- */
+
 .alvincontainer {
   display: flex;
   position: relative;
@@ -95,13 +131,6 @@ body {
   height: 100%;
 }
 
-/* I MIGHT WANT TO CHANGE MARGIN LEFT AT SOME POINT */
-.child2 {
-  width: 100%;
-  margin-left: 320px;
-}
-
-/* Sidebar */
 .sidebar {
   position: fixed;
   z-index: 1;
@@ -135,32 +164,7 @@ body {
   padding-right: 20px;
 }
 
-/* Main App */
-.alvinmain {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  background-color: blue;
-}
-
-.postname {
-  font-weight: bold;
-}
-
-.font1 {
-  font-size: 20px;
-}
-
-.mainpanel {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.enterbutton {
-  margin-left: auto;
-}
-
-/* News */
+/* ------------------ */
 
 .newscontainer {
   display: flex;
@@ -168,7 +172,6 @@ body {
 }
 
 .news {
-  position: fixed;
   justify-content: center;
   margin-left: auto;
   padding: 30px;
@@ -186,6 +189,8 @@ body {
   padding-left: 0px;
   border-radius: 20px;
 }
+
+/* Main Page -------------------------------------------- */
 
 .alvinavatar {
   margin: 5px;
@@ -280,6 +285,7 @@ ul.ui.list {
   }
 
   .child2 {
+    width: 100%;
     margin-left: 100px;
   }
 
