@@ -193,21 +193,23 @@ body {
 /* Main Page -------------------------------------------- */
 
 .alvinavatar {
-  margin: 5px;
-  border-radius: 200px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
-.alvinavatar:hover > .overlay {
+.overlay {
   position: absolute;
-  top: 0;
+  border-radius: 100%;
+  height: 140px;
   width: 100%;
-  height: 100%;
-  left: 0;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 100;
-  display: block;
+  background-color: black;
+  opacity: 0;
+  transition: opacity 100ms ease-in;
+  cursor: pointer;
+}
+
+.overlay:hover {
+  opacity: 0.4;
 }
 
 .prevPicContainer {
@@ -218,6 +220,8 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
+  height: 400px;
+  width: 400px;
 }
 
 .imgBorder {

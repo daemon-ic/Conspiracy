@@ -11,8 +11,8 @@ import ravensimg from "./images/ravens.jpg";
 import Sidebar from "./components/Sidebar";
 import News from "./components/News";
 import { storage } from "./Firebase";
-
-var usersDB = fire.firestore().collection("users");
+export const likeContext = React.createContext();
+export const unlikeContext = React.createContext();
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -25,6 +25,9 @@ const App = () => {
   const [authUser2, setAuthUser2] = useState("");
   const [UID, setUID] = useState("");
   const [windowLocationState, setWindowLocationState] = useState("");
+
+  var itemsDB = fire.firestore().collection("items");
+  var usersDB = fire.firestore().collection("users");
 
   // FOR PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,6 +178,7 @@ const App = () => {
       FullName: name,
       ProfilePicture:
         "https://firebasestorage.googleapis.com/v0/b/twitter-clone-ec8f6.appspot.com/o/profilePics%2Fdefault%2FDefault_Image.jpg?alt=media&token=7231ff52-cf7e-49a7-aa31-d19f0fa99337",
+      Bio: "",
     });
   };
 
@@ -198,99 +202,123 @@ const App = () => {
   };
 
   // detects auth -----------------------
+
   useEffect(() => {
     authListener();
   }, []);
 
-  // --------- change URLs will the problem
+  //------------------------------------------------------------- Like
+
+  const likePost = (itemDisplayLikes, itemDisplayId) => {
+    itemsDB
+      .doc(itemDisplayId)
+      .update({ likes: [...itemDisplayLikes, authUser2] });
+  };
+
+  const unlikePost = (itemDisplayLikes, itemDisplayId) => {
+    const newArray = itemDisplayLikes.filter(
+      (currentUser) => currentUser !== authUser2
+    );
+
+    itemsDB.doc(itemDisplayId).update({ likes: newArray });
+  };
 
   /////////////////////////////////////////////////////////////////
 
   return (
     <React.Fragment>
-      {user ? (
-        <React.Fragment>
-          <Route path="/">
-            <div className="alvincontainer">
-              <div className="sidebar">
-                <Sidebar UID={UID} />
-              </div>
+      <unlikeContext.Provider value={unlikePost}>
+        <likeContext.Provider value={likePost}>
+          {user ? (
+            <React.Fragment>
+              <Route path="/">
+                <div className="alvincontainer">
+                  <div className="sidebar">
+                    <Sidebar UID={UID} />
+                  </div>
 
-              <div className="child2">
-                <Home
-                  authUser2={authUser2}
-                  handleLogout={handleLogout}
-                  user={user}
-                  imgUrl={imgUrl}
-                  setImgUrl={setImgUrl}
-                  firstFunction={firstFunction}
-                />
-              </div>
-              <div className="newscontainer">
-                <div className="news">
-                  <News />
+                  <div className="child2">
+                    <Home
+                      authUser2={authUser2}
+                      handleLogout={handleLogout}
+                      user={user}
+                      imgUrl={imgUrl}
+                      setImgUrl={setImgUrl}
+                      firstFunction={firstFunction}
+                    />
+                  </div>
+                  <div className="newscontainer">
+                    <div className="news">
+                      <News />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Route>
+              </Route>
 
-          <Route path={"/profile/" + windowLocationState}>
-            <div className="alvincontainer">
-              <div className="sidebar">
-                <Sidebar UID={UID} />
-              </div>
+              <Route path={"/profile/" + windowLocationState}>
+                <div className="alvincontainer">
+                  <div className="sidebar">
+                    <Sidebar UID={UID} />
+                  </div>
 
-              <div className="child2">
-                <Profile
-                  handleLogout={handleLogout}
-                  user={user}
-                  imgUrl={imgUrl}
-                  setImgUrl={setImgUrl}
-                  firstFunction={firstFunction}
-                />
-              </div>
-              <div className="newscontainer">
-                <div className="news">
-                  <News />
+                  <div className="child2">
+                    <Profile
+                      authUser2={authUser2}
+                      handleLogout={handleLogout}
+                      user={user}
+                      imgUrl={imgUrl}
+                      setImgUrl={setImgUrl}
+                      firstFunction={firstFunction}
+                    />
+                  </div>
+                  <div className="newscontainer">
+                    <div className="news">
+                      <News />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Route>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Route path="/">
-            <section className="split left">
-              <div className="centered">
-                <div className="blackbackgrounddiv">
-                  <img className="ravens" src={ravensimg} alt="background" />
-                </div>
-              </div>
-            </section>
-            <section className="split right">
-              <div className="centered">
-                <div className="ui middle aligned center aligned grid App">
-                  <Login
-                    name={name}
-                    setName={setName}
-                    email={email}
-                    setEmail={setEmail}
-                    password={password}
-                    setPassword={setPassword}
-                    handleLogin={handleLogin}
-                    handleSignup={handleSignup}
-                    hasAccount={hasAccount}
-                    setHasAccount={setHasAccount}
-                    emailError={emailError}
-                    passwordError={passwordError}
-                  />
-                </div>
-              </div>
-            </section>
-          </Route>
-        </React.Fragment>
-      )}
-      <div className="footer"></div>
+              </Route>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Route path="/">
+                <section className="split left">
+                  <div className="centered">
+                    <div className="blackbackgrounddiv">
+                      <img
+                        className="ravens"
+                        src={ravensimg}
+                        alt="background"
+                      />
+                    </div>
+                  </div>
+                </section>
+                <section className="split right">
+                  <div className="centered">
+                    <div className="ui middle aligned center aligned grid App">
+                      <Login
+                        name={name}
+                        setName={setName}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
+                        handleLogin={handleLogin}
+                        handleSignup={handleSignup}
+                        hasAccount={hasAccount}
+                        setHasAccount={setHasAccount}
+                        emailError={emailError}
+                        passwordError={passwordError}
+                      />
+                    </div>
+                  </div>
+                </section>
+              </Route>
+            </React.Fragment>
+          )}
+          <div className="footer"></div>
+        </likeContext.Provider>
+      </unlikeContext.Provider>
     </React.Fragment>
   );
 };

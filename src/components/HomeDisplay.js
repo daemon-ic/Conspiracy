@@ -1,10 +1,11 @@
 /* eslint-disable */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import fire from "../Firebase";
+import { likeContext } from "../App";
+import { unlikeContext } from "../App";
 
 var usersDB = fire.firestore().collection("users");
-var itemsDB = fire.firestore().collection("items");
 
 // -------------------------------------------------------------- Display list on mount and make it usable
 
@@ -28,6 +29,9 @@ function useItems() {
 
 const HomeDisplay = ({ items, authUser2 }) => {
   const [list, setList] = useState([]);
+
+  const likePost = useContext(likeContext);
+  const unlikePost = useContext(unlikeContext);
 
   const userList = useItems();
 
@@ -94,19 +98,19 @@ const HomeDisplay = ({ items, authUser2 }) => {
 
   // ----------------------------------------------------------------- Handle Liking
 
-  const likePost = (itemDisplayLikes, itemDisplayId) => {
-    itemsDB
-      .doc(itemDisplayId)
-      .update({ likes: [...itemDisplayLikes, authUser2] });
-  };
+  // const likePost = (itemDisplayLikes, itemDisplayId) => {
+  //   itemsDB
+  //     .doc(itemDisplayId)
+  //     .update({ likes: [...itemDisplayLikes, authUser2] });
+  // };
 
-  const unlikePost = (itemDisplayLikes, itemDisplayId) => {
-    const newArray = itemDisplayLikes.filter(
-      (currentUser) => currentUser !== authUser2
-    );
+  // const unlikePost = (itemDisplayLikes, itemDisplayId) => {
+  //   const newArray = itemDisplayLikes.filter(
+  //     (currentUser) => currentUser !== authUser2
+  //   );
 
-    itemsDB.doc(itemDisplayId).update({ likes: newArray });
-  };
+  //   itemsDB.doc(itemDisplayId).update({ likes: newArray });
+  // };
 
   // ----------------------------------------------------------------- Handle UID
 
@@ -148,7 +152,7 @@ const HomeDisplay = ({ items, authUser2 }) => {
                 <div className="ui comments">
                   <div className="comment">
                     <a class="avatar">
-                      {/* ------------------------------------------------------------------ */}
+                      {/* ------------------------------------------------------------------ Bio */}
 
                       <img
                         className="alvinavatar"
@@ -161,7 +165,7 @@ const HomeDisplay = ({ items, authUser2 }) => {
 
                       {/* ------------------------------------------------------------------ */}
                     </a>
-
+                    {/* ------------------------------------------------------------------ Bio */}
                     <div className="content">
                       <a
                         className="author"
@@ -170,13 +174,17 @@ const HomeDisplay = ({ items, authUser2 }) => {
                         {itemDisplay.user}
                       </a>
 
+                      {/* ------------------------------------------------------------------ Timestamp */}
+
                       <div className="metadata">
                         <span className="date">
                           {timestamp(itemDisplay.timestamp)}
                         </span>
                       </div>
+                      {/* ------------------------------------------------------------------ Post */}
 
                       <div className="text">{itemDisplay.value}</div>
+
                       {itemDisplay.pic ? (
                         <img
                           className="previewPic"
@@ -186,19 +194,22 @@ const HomeDisplay = ({ items, authUser2 }) => {
                           alt={""}
                         />
                       ) : null}
+
+                      {/* ------------------------------------------------------------------ Likes */}
+
                       <div className="actions">
                         {hasLiked === true ? (
                           <React.Fragment>
                             <text className="reply" style={{ color: "green" }}>
                               {itemDisplay.likes.length}{" "}
                             </text>
+
                             <a
                               onClick={() =>
                                 unlikePost(itemDisplay.likes, itemDisplay.id)
                               }
                               className="reply"
                             >
-                              {" "}
                               Unlike
                             </a>
                           </React.Fragment>

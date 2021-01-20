@@ -1,7 +1,9 @@
 /* eslint-disable */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import fire from "../Firebase";
+import { likeContext } from "../App";
+import { unlikeContext } from "../App";
 
 var usersDB = fire.firestore().collection("users");
 
@@ -21,8 +23,11 @@ function useItems() {
   return userList;
 }
 
-const Display2 = ({ loggedInUser, urlUser, items, deleteItem }) => {
+const Display2 = ({ loggedInUser, urlUser, items, deleteItem, authUser2 }) => {
   const [list, setList] = useState([]);
+
+  const likePost = useContext(likeContext);
+  const unlikePost = useContext(unlikeContext);
 
   const userList = useItems();
 
@@ -85,7 +90,20 @@ const Display2 = ({ loggedInUser, urlUser, items, deleteItem }) => {
     <React.Fragment>
       <ul className="ui list">
         {items.map((itemDisplay) => {
-          //-----------------------------------------------------
+          //----------------------------------------------------------- Check if current user is on Like List
+          //**** Ask adrian more about why not to use state here */
+          let hasLiked = false;
+          const likeList = itemDisplay.likes;
+          const parseLikes = () => {
+            for (let i = 0; i < likeList.length; i++) {
+              if (authUser2 == likeList[i]) {
+                hasLiked = true;
+              }
+            }
+          };
+          parseLikes();
+
+          //----------------------------------------------------------- Display number of likes
           return (
             <div
               style={{
@@ -131,16 +149,49 @@ const Display2 = ({ loggedInUser, urlUser, items, deleteItem }) => {
                         />
                       ) : null}
                       {/*---------------------------------------------------------------- DELETE BUTTON*/}
-                      {loggedInUser === urlUser ? (
-                        <div className="actions">
+                      <div className="actions">
+                        {hasLiked === true ? (
+                          <React.Fragment>
+                            <text className="reply" style={{ color: "green" }}>
+                              {itemDisplay.likes.length}{" "}
+                            </text>
+
+                            <a
+                              onClick={() =>
+                                unlikePost(itemDisplay.likes, itemDisplay.id)
+                              }
+                              className="reply"
+                            >
+                              Unlike
+                            </a>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <text
+                              className="reply"
+                              style={{ color: "rgba(0,0,0,.4)" }}
+                            >
+                              {itemDisplay.likes.length}{" "}
+                            </text>
+                            <a
+                              onClick={() =>
+                                likePost(itemDisplay.likes, itemDisplay.id)
+                              }
+                              className="reply"
+                            >
+                              Like
+                            </a>
+                          </React.Fragment>
+                        )}
+                        {loggedInUser === urlUser ? (
                           <a
                             onClick={() => deleteItem(itemDisplay.id)}
                             className="reply"
                           >
                             Delete
                           </a>
-                        </div>
-                      ) : null}
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>

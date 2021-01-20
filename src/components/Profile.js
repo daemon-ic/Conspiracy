@@ -4,18 +4,68 @@ import React, { useEffect, useState } from "react";
 import fire from "../Firebase";
 import "../App.css";
 import Display2 from "./Display2";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import Button from "@material-ui/core/Button";
+import { makeStyles, TextField } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core/styles";
+
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
+//------------------------------------------------------------- Text Styles
+
+const theme = createMuiTheme({
+  palette: {},
+});
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    paddingLeft: "20px",
+    fontSize: "20px",
+    fontFamily: "sans-serif",
+  },
+  email: {
+    paddingTop: "0px",
+    paddingLeft: "20px",
+    fontSize: "13px",
+    fontFamily: "sans-serif",
+  },
+  body: {
+    wordBreak: "normal",
+    paddingTop: "20px",
+    paddingLeft: "20px",
+    fontSize: "15px",
+    fontFamily: "sans-serif",
+  },
+  input: {
+    width: "100%",
+    wordBreak: "normal",
+    paddingTop: "20px",
+    paddingLeft: "20px",
+    fontSize: "15px",
+    fontFamily: "sans-serif",
+  },
+  editbutton: {
+    margin: theme.spacing(1),
+    fontColor: "#2979ff",
+  },
+}));
+
+//------------------------------------------------------------- Text Styles
+//------------------------------------------------------------- Declare Variables
 
 var itemsDB = fire.firestore().collection("items");
 var usersDB = fire.firestore().collection("users");
 
+//------------------------------------------------------------- Declare Variables
+
 function useItems() {
   const [items, setItems] = useState([]);
+
   const [currentUser, setCurrentUser] = useState("");
 
   let userList = [];
   let currentUserEmail = "";
-
   useEffect(() => {
     const handleUID = async () => {
       await usersDB.get().then((snapshot) => {
@@ -38,43 +88,55 @@ function useItems() {
 
       const unsubscribe = itemsDB
         .where("user", "==", currentUserEmail)
-
-        //.orderBy("timestamp")----------------------------------------------------- NEEDS TO BE FIXED WITH COMPOUND UPDATES IN FIREBASE ***
-
+        //.orderBy("timestamp") NEEDS TO BE FIXED WITH COMPOUND UPDATES IN FIREBASE ***
         .onSnapshot((snapshot) => {
-          // updates list every time there is an update
           const newItems = snapshot.docs.reverse().map((doc) => ({
-            // show the list of all post data
             ...doc.data(),
           }));
-          setItems(newItems); //set it to state
+          setItems(newItems);
         });
-
-      return () => unsubscribe(); // calls its own function when page is loaded
+      return () => unsubscribe();
     };
     handleUID();
   }, []);
 
-  return { items, currentUser }; // ????
-
-  // return items;
+  return { items, currentUser };
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//------------------------------------------------------------- Main Component
 
-const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
-  const items = useItems(); // < --------- this is the issue on display 2
+const Profile = ({ handleLogout, imgUrl, firstFunction, authUser2 }) => {
+  const [editBioToggle, setEditBioToggle] = useState(false);
+  const [bioInput, setBioInput] = useState("");
+
+  const classes = useStyles();
+  const items = useItems();
 
   const loggedInUser = fire.auth().currentUser.uid;
   const urlUser = items.currentUser.UID;
 
   function deleteItem(itemId) {
     itemsDB.doc(itemId).delete();
-    console.log("authUser: ", loggedInUser);
-    console.log("urlUser: ", urlUser);
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const editBio = (e) => {
+    // (pressing Submit)
 
+    e.preventDefault();
+    usersDB.doc(items.currentUser.Email).update({ Bio: bioInput });
+
+    setEditBioToggle(false);
+    setBioInput("");
+    location.reload();
+  };
+
+  const enterNewBio = () => {
+    // (pressing Edit)
+    setBioInput(items.currentUser.Bio);
+    setEditBioToggle(true);
+  };
+
+  //------------------------------------------------------------- Main Component
+  //------------------------------------------------------------- Render
   return (
     <React.Fragment>
       <div className="homeheader">
@@ -101,31 +163,114 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
             </div>
           </div>
         </section>
-
         <div>
-          {/* ------------------------------------------------------------------ PROFILE PICTURE */}
+          {/* PROFILE PICTURE */}
 
-          <div className="alvinavatar">
-            <img
-              className="alvinavatar"
-              height="140"
-              weight="140"
-              src={items.currentUser.ProfilePicture}
-              alt={""}
-            />
+          <div
+            style={{
+              paddingTop: "10px",
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+              }}
+            >
+              <div className="overlay">
+                <div
+                  style={{
+                    position: "relative",
+                    alignSelf: "center",
+                    height: "100%",
+                    width: "100%",
+                    justifyContent: "center",
+                    display: "flex",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "white",
+                      alignSelf: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Change Photo
+                  </div>
+                  <input
+                    style={{
+                      opacity: "0",
+                    }}
+                    type="file"
+                    onChange={firstFunction}
+                  />
+                </div>
+              </div>
+
+              <img
+                className="alvinavatar"
+                height="140"
+                width="140"
+                src={items.currentUser.ProfilePicture}
+                alt={""}
+              />
+            </div>
+
+            {/* BIO */}
+
+            <div
+              style={{
+                width: "90%",
+                paddingTop: "30px",
+                backgroundColor: "",
+              }}
+            >
+              <Typography className={classes.title}>
+                {items.currentUser.FullName}
+              </Typography>
+
+              <Typography className={classes.email}>
+                {items.currentUser.Email}
+              </Typography>
+              {editBioToggle ? (
+                <InputBase
+                  multiline
+                  className={classes.input}
+                  placeholder="Enter your bio"
+                  value={bioInput}
+                  onChange={(e) => setBioInput(e.currentTarget.value)}
+                />
+              ) : (
+                <Typography className={classes.body}>
+                  {items.currentUser.Bio}
+                </Typography>
+              )}
+            </div>
           </div>
 
-          {/* ------------------------------------------------------------------ CHANGE AVATAR */}
+          {/* CHANGE AVATAR */}
           {loggedInUser === urlUser ? (
-            <form>
-              <input type="file" onChange={firstFunction} />
-            </form>
+            <div>
+              {editBioToggle ? (
+                <Button variant="outlined" onClick={editBio}>
+                  Submit
+                </Button>
+              ) : (
+                <Button variant="outlined" onClick={enterNewBio}>
+                  Edit Bio
+                </Button>
+              )}
+            </div>
           ) : null}
         </div>
 
         <div className="mainpanel" />
       </div>
+
       <Display2
+        authUser2={authUser2}
         loggedInUser={loggedInUser}
         urlUser={urlUser}
         items={items.items}
@@ -137,3 +282,4 @@ const Profile = ({ handleLogout, imgUrl, setImgUrl, firstFunction }) => {
 };
 
 export default Profile;
+//------------------------------------------------------------- Render

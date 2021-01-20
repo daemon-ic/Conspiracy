@@ -11,7 +11,7 @@ function Sidebar({ UID }) {
     {
       title: "",
       icon: <img className="logo" src={logo} alt="logo" />,
-      link: "/home",
+      link: "/",
     },
 
     {
