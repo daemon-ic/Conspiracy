@@ -38,12 +38,28 @@ const App = () => {
   );
 
   //----------------------------------------------------------- On mount
+  useEffect(() => {
+    const authListener = () => {
+      console.log("1 Detecting User");
+      fire.auth().onAuthStateChanged((user) => {
+        if (user) {
+          clearInputs();
+          setUser(user);
+        } else {
+          // window.location.pathname = "/login";
+          setUser("");
+        }
+      });
+    };
+    authListener();
+  }, []);
 
   useEffect(() => {
     const applyUID = async () => {
+      console.log("4 Getting UID from Firebase (applyUID)");
       const authUser = await fire.auth().currentUser.email;
       const getUid = await fire.auth().currentUser.uid;
-
+      console.log(" 5 Adding users UID into UserDoc");
       usersDB.doc(authUser).update({ UID: getUid });
 
       setUID(getUid);
@@ -135,9 +151,11 @@ const App = () => {
 
   const handleLogin = () => {
     clearErrors();
+
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then(() => (window.location.pathname = "/home"))
       .catch((err) => {
         switch (err.code) {
           case "auth/invalid-email":
@@ -154,10 +172,12 @@ const App = () => {
   };
 
   const handleSignup = () => {
+    console.log(" 2 Applying email and password");
     clearErrors();
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => (window.location.pathname = "/home"))
       .catch((err) => {
         switch (err.code) {
           case "auth/email-already-in-use":
@@ -173,6 +193,7 @@ const App = () => {
 
     // info that's stored in firestore -----------------
     const id = email;
+    console.log("3 Populating user doc");
     usersDB.doc(id).set({
       Email: email,
       FullName: name,
@@ -185,37 +206,28 @@ const App = () => {
   // logout button ---------------------
 
   const handleLogout = () => {
-    window.location.pathname = "/";
+    console.log("Logging out. Going to login page.");
+    window.location.pathname = "/login";
     fire.auth().signOut();
   };
 
   // check if user exists -----------------------
-  const authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        clearInputs();
-        setUser(user);
-      } else {
-        setUser("");
-      }
-    });
-  };
 
   // detects auth -----------------------
-
-  useEffect(() => {
-    authListener();
-  }, []);
 
   //------------------------------------------------------------- Like
 
   const likePost = (itemDisplayLikes, itemDisplayId) => {
+    console.log("Adding current user to Posts' Like List");
     itemsDB
       .doc(itemDisplayId)
       .update({ likes: [...itemDisplayLikes, authUser2] });
   };
 
   const unlikePost = (itemDisplayLikes, itemDisplayId) => {
+    console.log(
+      "Creating new Like List without current user and saving to Post Like List"
+    );
     const newArray = itemDisplayLikes.filter(
       (currentUser) => currentUser !== authUser2
     );
@@ -231,7 +243,7 @@ const App = () => {
         <likeContext.Provider value={likePost}>
           {user ? (
             <React.Fragment>
-              <Route path="/">
+              <Route path="/home">
                 <div className="alvincontainer">
                   <div className="sidebar">
                     <Sidebar UID={UID} />
@@ -281,7 +293,7 @@ const App = () => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Route path="/">
+              <Route path="/login">
                 <section className="split left">
                   <div className="centered">
                     <div className="blackbackgrounddiv">

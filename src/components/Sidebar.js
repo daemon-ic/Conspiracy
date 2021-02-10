@@ -11,13 +11,13 @@ function Sidebar({ UID }) {
     {
       title: "",
       icon: <img className="logo" src={logo} alt="logo" />,
-      link: "/",
+      link: "/home",
     },
 
     {
       title: "Home",
       icon: <HomeIcon />,
-      link: "/",
+      link: "/home",
     },
 
     {
@@ -41,8 +41,22 @@ function Sidebar({ UID }) {
                 }}
               >
                 {" "}
-                <div className="sidebaricon">{val.icon}</div>
-                <div className="sidebarwords">{val.title}</div>
+                <div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="sidebaricon"
+                >
+                  {val.icon}
+                </div>
+                <div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="sidebarwords"
+                >
+                  {val.title}
+                </div>
               </li>
             );
           })}

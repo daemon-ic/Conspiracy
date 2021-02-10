@@ -7,7 +7,7 @@ import Display2 from "./Display2";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button";
-import { makeStyles, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: "100%",
+    color: "grey",
     wordBreak: "normal",
     paddingTop: "20px",
     paddingLeft: "20px",
@@ -252,13 +253,21 @@ const Profile = ({ handleLogout, imgUrl, firstFunction, authUser2 }) => {
 
           {/* CHANGE AVATAR */}
           {loggedInUser === urlUser ? (
-            <div>
+            <div style={{ display: "flex", paddingRight: 16 }}>
               {editBioToggle ? (
-                <Button variant="outlined" onClick={editBio}>
+                <Button
+                  style={{ marginLeft: "auto" }}
+                  variant="outlined"
+                  onClick={editBio}
+                >
                   Submit
                 </Button>
               ) : (
-                <Button variant="outlined" onClick={enterNewBio}>
+                <Button
+                  style={{ marginLeft: "auto" }}
+                  variant="outlined"
+                  onClick={enterNewBio}
+                >
                   Edit Bio
                 </Button>
               )}

@@ -109,7 +109,10 @@ const Home = ({ authUser2, handleLogout, imgUrl }) => {
                 marginLeft: "auto",
               }}
             >
-              <ExitToAppIcon onClick={handleLogout} />
+              <ExitToAppIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleLogout}
+              />
             </div>
           </div>
         </section>

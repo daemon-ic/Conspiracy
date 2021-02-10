@@ -5,7 +5,7 @@ import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import { makeStyles } from "@material-ui/core";
-
+import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
   textInput: {
     paddingLeft: "20px",
@@ -98,9 +98,17 @@ const Input = ({
               paddingTop: 5,
             }}
           >
-            <button className="mini ui button" onClick={onSubmit}>
+            {/* <button className="mini ui button" onClick={onSubmit}>
               Enter
-            </button>
+            </button> */}
+
+            <Button
+              style={{ marginLeft: "auto" }}
+              variant="outlined"
+              onClick={onSubmit}
+            >
+              Enter
+            </Button>
           </span>
         </div>
       </form>
