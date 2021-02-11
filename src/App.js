@@ -38,6 +38,7 @@ const App = () => {
   );
 
   //----------------------------------------------------------- On mount
+
   useEffect(() => {
     const authListener = () => {
       console.log("1 Detecting User");
@@ -45,8 +46,14 @@ const App = () => {
         if (user) {
           clearInputs();
           setUser(user);
+          console.log("user: ", user);
+          if (window.location.pathname === "/") {
+            window.location.pathname = "/home";
+          }
         } else {
-          // window.location.pathname = "/login";
+          if (window.location.pathname === "/") {
+            window.location.pathname = "/login";
+          }
           setUser("");
         }
       });
