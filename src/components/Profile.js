@@ -137,6 +137,7 @@ const Profile = ({ handleLogout, imgUrl, firstFunction, authUser2 }) => {
   };
 
   //------------------------------------------------------------- Main Component
+
   //------------------------------------------------------------- Render
   return (
     <React.Fragment>
@@ -170,6 +171,7 @@ const Profile = ({ handleLogout, imgUrl, firstFunction, authUser2 }) => {
           <div
             style={{
               paddingTop: "10px",
+              paddingLeft: "10px",
               display: "flex",
               flexDirection: "row",
             }}
@@ -181,33 +183,37 @@ const Profile = ({ handleLogout, imgUrl, firstFunction, authUser2 }) => {
               }}
             >
               <div className="overlay">
-                <div
-                  style={{
-                    position: "relative",
-                    alignSelf: "center",
-                    height: "100%",
-                    width: "100%",
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                >
+                <label htmlFor="file-file">
                   <div
                     style={{
-                      color: "white",
+                      position: "relative",
                       alignSelf: "center",
+                      height: "100%",
+                      width: "100%",
                       justifyContent: "center",
+                      display: "flex",
+                      cursor: "pointer",
                     }}
                   >
-                    Change Photo
+                    <div
+                      style={{
+                        color: "white",
+                        alignSelf: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Change Photo
+                    </div>
                   </div>
-                  <input
-                    style={{
-                      opacity: "0",
-                    }}
-                    type="file"
-                    onChange={firstFunction}
-                  />
-                </div>
+                </label>
+                <input
+                  id="file-file"
+                  style={{
+                    display: "none",
+                  }}
+                  type="file"
+                  onChange={firstFunction}
+                />
               </div>
 
               <img
